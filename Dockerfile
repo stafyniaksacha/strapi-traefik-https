@@ -8,12 +8,12 @@ ARG DATABASE_PASSWORD
 ARG ADMIN_JWT_SECRET
 
 WORKDIR /app
-COPY package.json ./
-COPY yarn.lock ./
+COPY ./strapi/package.json ./
+COPY ./strapi/yarn.lock ./
 
 RUN yarn
 
-COPY . .
+COPY ./strapi .
 
 ENV STRAPI_URL=$STRAPI_URL
 ENV DATABASE_PORT=$DATABASE_PORT
