@@ -6,7 +6,7 @@ Simple docker https configuration for strapi using traefik
 - https://github.com/strapi/strapi
 - https://github.com/postgres/postgres (for this example)
 
-## :rocket: Quickstart (5 steps)
+## :rocket: Quickstart (6 steps)
 
 1. Clone this repository (or fork it)
 ```sh
@@ -22,8 +22,16 @@ yarn create strapi-app strapi
 > or copy your project to `./strapi`   
 > or create a symlink to your existing project to `./strapi`  
 > or clone a git submodule into `./strapi`
+
+3. Add `strapi-connector-bookshelf` and `pg` packages to strapi project
+
+```sh
+cd ./strapi
+
+yarn add strapi-connector-bookshelf pg
+```
   
-3. Update Strapi configuration 
+4. Update Strapi configuration 
 ```js
 // ./strapi/config/database.js
 
@@ -61,12 +69,12 @@ module.exports = ({ env }) => ({
 });
 ```
 
-4. Create docker network
+5. Create docker network
 ```sh
 docker network create my-app-services
 ```
 
-5. Start the whole stack
+6. Start the whole stack
 ```sh
 docker-compose up
 ```
