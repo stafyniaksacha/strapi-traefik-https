@@ -28,7 +28,7 @@ services:
       traefik.http.routers.traefik-https.rule: "Host(`traefik.${HOST:-127.0.0.1.xip.io}`)"
       traefik.http.routers.traefik-https.tls: true
       traefik.http.routers.traefik-https.tls.certresolver: "http"
-      traefik.http.routers.traefik-https.middlewares: "preprod-auth@file"
+      traefik.http.routers.traefik-https.middlewares: "htpasswd-auth@file"
       
   postgres:
     image: postgres
