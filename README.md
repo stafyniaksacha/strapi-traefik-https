@@ -1,4 +1,4 @@
-# Strapi HTTPS with Traefik
+# :lock: Strapi HTTPS with Traefik
 
 Simple docker https configuration for strapi using traefik 
 
@@ -6,7 +6,7 @@ Simple docker https configuration for strapi using traefik
 - https://github.com/strapi/strapi
 - https://github.com/postgres/postgres (for this example)
 
-### Quickstart
+## :rocket: Quickstart (5 steps)
 
 1. Clone this repository (or fork it)
 ```sh
@@ -68,9 +68,7 @@ docker network create my-app-services
 docker-compose up
 ```
 
-## Notes
-
-### Access your services
+## :tada: Access your services
 
 **Strapi admin**: https://strapi.127.0.0.1.xip.io/admin
 **Traefik dashboard**: https://traefik.127.0.0.1.xip.io/ (htpasswd auth: user/pass)
@@ -80,7 +78,7 @@ docker-compose up
 
 > You can change `./traefik/htpasswd` file to change http auth for traefik dashboard
 
-### Development with hotreload
+## :arrows_counterclockwise: Development with hotreload
 
 1. install `node_modules` from your host
 ```sh
@@ -94,7 +92,7 @@ CURRENT_UID=$(id -u):$(id -g) docker-compose -f docker-compose.dev.yml up
 > `CURRENT_UID` is used to bind your host user to the docker container user  
 > so files created inside the container or outside remain the same (no fs erros !)
 
-### Environment variables
+## :triangular_flag_on_post: Environment variables
 
 | Name  | Default | Description |
 | ------------- | ------------- | ------------- |
