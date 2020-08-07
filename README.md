@@ -72,20 +72,15 @@ docker-compose up
 
 ### Access your services
 
-#### Traefik
-
-Traefik dashboard: https://traefik.127.0.0.1.xip.io/ (htpasswd auth: user/pass)
+**Strapi admin**: https://strapi.127.0.0.1.xip.io/admin
+**Traefik dashboard**: https://traefik.127.0.0.1.xip.io/ (htpasswd auth: user/pass)
 
 > Traefik is binded to the host network:   
 > using xip.io service allow us to have a wildcard dns pointing to 127.0.0.1
 
 > You can change `./traefik/htpasswd` file to change http auth for traefik dashboard
 
-#### Strapi
-
-Strapi admin: https://strapi.127.0.0.1.xip.io/admin
-
-#### Development with hotreload
+### Development with hotreload
 
 1. install `node_modules` from your host
 ```sh
