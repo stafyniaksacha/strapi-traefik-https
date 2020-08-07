@@ -17,7 +17,8 @@ git clone git@github.com:stafyniaksacha/strapi-traefik-https.git
 ```sh
 yarn create strapi-app strapi
 ```
-> or copy your project to `./strapi` / create a symlink to your existing project to `./strapi`
+> or copy your project to `./strapi`   
+> or create a symlink to your existing project to `./strapi`
   
 3. Update Strapi configuration 
 ```js
@@ -96,7 +97,7 @@ yarn
 ```sh
 CURRENT_UID=$(id -u):$(id -g) docker-compose -f docker-compose.dev.yml up
 ```
-> `CURRENT_UID` is used to bind your host user to the docker container user
+> `CURRENT_UID` is used to bind your host user to the docker container user  
 > so files created inside the container or outside remain the same (no fs erros !)
 
 ### Environment variables
