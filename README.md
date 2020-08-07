@@ -42,8 +42,7 @@ module.exports = ({ env }) => ({
   },
 });
 ```
-  
-3. Update Strapi configuration 
+
 ```js
 // ./strapi/config/server.js
 
