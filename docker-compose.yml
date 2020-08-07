@@ -18,7 +18,7 @@ services:
       - ./traefik/htpasswd:/htpasswd
     labels:
       traefik.enable: true
-      traefik.docker.network: outdoormix-services"
+      traefik.docker.network: "my-app-services"
       traefik.http.routers.traefik.entrypoints: "http"
       traefik.http.routers.traefik.rule: "Host(`traefik.${HOST:-127.0.0.1.xip.io}`)"
       traefik.http.routers.traefik.middlewares: "https-redirect@file"
@@ -63,7 +63,7 @@ services:
       ADMIN_JWT_SECRET: "${ADMIN_JWT_SECRET:-jwtsecret}"
     labels:
       traefik.enable: true
-      traefik.docker.network: "services"
+      traefik.docker.network: "my-app-services"
       traefik.http.routers.strapi.entrypoints: "http"
       traefik.http.routers.strapi.rule: "Host(`strapi.${HOST:-127.0.0.1.xip.io}`)"
       traefik.http.routers.strapi.middlewares: "https-redirect@file"
