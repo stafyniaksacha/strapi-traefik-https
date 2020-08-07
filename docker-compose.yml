@@ -57,7 +57,7 @@ services:
       - my-app-services
     restart: "${DOCKER_SERVICES_RESTART:-no}"
     volumes:
-      - outdoormix-uploads-data:/app/public/uploads
+      - my-app-strapi-uploads-data:/app/public/uploads
     environment:
       NODE_ENV: "production"
       ADMIN_JWT_SECRET: "${ADMIN_JWT_SECRET:-jwtsecret}"
