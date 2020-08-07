@@ -11,6 +11,8 @@ Simple docker https configuration for strapi using traefik
 1. Clone this repository (or fork it)
 ```sh
 git clone git@github.com:stafyniaksacha/strapi-traefik-https.git
+
+cd ./strapi-traefik-https
 ```
 
 2. Create a new Strapi project in `./strapi` folder
