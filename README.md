@@ -85,6 +85,20 @@ Traefik dashboard: https://traefik.127.0.0.1.xip.io/ (htpasswd auth: user/pass)
 
 Strapi admin: https://strapi.127.0.0.1.xip.io/admin
 
+#### Development with hotreload
+
+1. install `node_modules` from your host
+```sh
+yarn
+```
+
+2. start your stack with `docker-compose.dev.yml`
+```sh
+CURRENT_UID=$(id -u):$(id -g) docker-compose -f docker-compose.dev.yml up
+```
+> `CURRENT_UID` is used to bind your host user to the docker container user
+> so files created inside the container or outside remain the same (no fs erros !)
+
 ### Environment variables
 
 | Name  | Default | Description |
