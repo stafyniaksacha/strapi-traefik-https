@@ -113,3 +113,15 @@ CURRENT_UID=$(id -u):$(id -g) docker-compose -f docker-compose.dev.yml up
 | DATABASE_USERNAME  | `postgresuser`  | postgres default user name |
 | DATABASE_PASSWORD  | `postgrespassword`  | postgres default user password |
 | ADMIN_JWT_SECRET  | `jwtsecret`  | strapi admin jwt token (since 3.1.x) |
+
+## :file_folder: Create data backup
+
+Generate a folder in `./backups` directory containing: 
+- strapi uploaded media `./backups/YYYYMMDD-HHmm/strapi_uploads.tar.gz`
+- postgres dump `./backups/YYYYMMDD-HHmm/dump_postgres.sql`
+
+```sh
+chmod +x ./backup.sh
+
+./backup.sh
+```
