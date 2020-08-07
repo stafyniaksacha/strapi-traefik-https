@@ -1,0 +1,82 @@
+version: '3.7'
+
+services:
+  traefik:
+    image: traefik:v2.2
+    restart: "${DOCKER_SERVICES_RESTART:-no}"
+    networks:
+      - my-app-services
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik/traefik.yml:/traefik.yml:ro
+      - ./traefik/middlewares.yml:/middlewares.yml
+      - ./traefik/${HOST:-127.0.0.1.xip.io}/acme.json:/acme.json
+      - ./traefik/htpasswd:/htpasswd
+    labels:
+      traefik.enable: true
+      traefik.docker.network: "my-app-services"
+      traefik.http.routers.traefik.entrypoints: "http"
+      traefik.http.routers.traefik.rule: "Host(`traefik.${HOST:-127.0.0.1.xip.io}`)"
+      traefik.http.routers.traefik.middlewares: "https-redirect@file"
+      traefik.http.services.traefik-https.loadbalancer.server.port: 8080
+      traefik.http.routers.traefik-https.service: "api@internal"
+      traefik.http.routers.traefik-https.entrypoints: "https"
+      traefik.http.routers.traefik-https.rule: "Host(`traefik.${HOST:-127.0.0.1.xip.io}`)"
+      traefik.http.routers.traefik-https.tls: true
+      traefik.http.routers.traefik-https.tls.certresolver: "http"
+      traefik.http.routers.traefik-https.middlewares: "htpasswd-auth@file"
+      
+  postgres:
+    image: postgres
+    restart: "${DOCKER_SERVICES_RESTART:-no}"
+    networks:
+      - my-app-services
+    volumes:
+      - my-app-strapi-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "${DATABASE_USERNAME:-postgresuser}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD:-postgrespassword}"
+      POSTGRES_DB: "${DATABASE_HOST:-postgresdb}"
+      
+  strapi:
+    image: strapi/strapi
+    command: sh -c '(rm -rf .cache build || 1) && strapi develop'
+    user: ${CURRENT_UID:?" --- Please run as follows 'CURRENT_UID=$(id -u):$(id -g) docker-compose -f docker-compose.dev.yml up'"}
+    networks:
+      - my-app-services
+    restart: "${DOCKER_SERVICES_RESTART:-no}"
+    volumes:
+      - ./strapi:/srv/app
+    environment:
+      STRAPI_URL: "strapi.${HOST:-127.0.0.1.xip.io}"
+      DATABASE_HOST: "postgres"
+      DATABASE_PORT: "${DATABASE_PORT:-5432}"
+      DATABASE_NAME: "${DATABASE_NAME:-postgresdb}"
+      DATABASE_USERNAME: "${DATABASE_USERNAME:-postgresuser}"
+      DATABASE_PASSWORD: "${DATABASE_PASSWORD:-postgrespassword}"
+      ADMIN_JWT_SECRET: "${ADMIN_JWT_SECRET:-jwtsecret}"
+    labels:
+      traefik.enable: true
+      traefik.docker.network: "services"
+      traefik.http.routers.strapi.entrypoints: "http"
+      traefik.http.routers.strapi.rule: "Host(`strapi.${HOST:-127.0.0.1.xip.io}`)"
+      traefik.http.routers.strapi.middlewares: "https-redirect@file"
+      traefik.http.services.strapi-https.loadbalancer.server.port: 1337
+      traefik.http.routers.strapi-https.rule: "Host(`strapi.${HOST:-127.0.0.1.xip.io}`)"
+      traefik.http.routers.strapi-https.tls: true
+      traefik.http.routers.strapi-https.entrypoints: "https"
+      traefik.http.routers.strapi-https.tls.certresolver: "http"
+  
+volumes:
+  my-app-strapi-postgres:
+    driver: local
+  my-app-strapi-uploads:
+    driver: local
+    
+networks:
+  my-app-services:
+    external: true
