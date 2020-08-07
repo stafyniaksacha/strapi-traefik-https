@@ -21,6 +21,7 @@ yarn create strapi-app strapi
 ```
 > or copy your project to `./strapi`   
 > or create a symlink to your existing project to `./strapi`
+> or clone a git submodule into `./strapi`
   
 3. Update Strapi configuration 
 ```js
